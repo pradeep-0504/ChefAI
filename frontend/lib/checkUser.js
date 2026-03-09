@@ -24,7 +24,7 @@ export const checkUser = async () => {
   try {
     // Check if user exists in Strapi
     const existingUserResponse = await fetch(
-      `${STRAPI_URL}/api/users?filters[clerkId][$eq]=${user.id}`,
+      `${STRAPI_URL}/api/users-permissions/users?filters[clerkId][$eq]=${user.id}`,
       {
         headers: {
           Authorization: `Bearer ${STRAPI_API_TOKEN}`,
@@ -46,7 +46,7 @@ export const checkUser = async () => {
 
       // Update subscription tier if changed
       if (existingUser.subscriptionTier !== subscriptionTier) {
-        await fetch(`${STRAPI_URL}/api/users/${existingUser.id}`, {
+        await fetch(`${STRAPI_URL}/api/users-permissions/users/${existingUser.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -95,7 +95,7 @@ export const checkUser = async () => {
       subscriptionTier,
     };
 
-    const newUserResponse = await fetch(`${STRAPI_URL}/api/users`, {
+    const newUserResponse = await fetch(`${STRAPI_URL}/api/users-permissions/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
