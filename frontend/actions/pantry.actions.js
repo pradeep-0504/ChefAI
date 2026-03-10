@@ -80,8 +80,9 @@ Rules:
 - Maximum 20 items
 - Common pantry staples are acceptable (salt, pepper, oil)
 `;
-
-    const result = await model.generateContent([
+    let text;
+    try {
+      const result = await model.generateContent([
       prompt,
       {
         inlineData: {
@@ -92,7 +93,12 @@ Rules:
     ]);
 
     const response = await result.response;
-    const text = response.text();
+    text = response.text();
+      
+    } catch (error) {
+      console.error("Error generating vision response:", error);
+      throw new Error("Failed to analyze image Gemini. Please try again.");
+    }
 
     // Parse JSON response
     let ingredients;

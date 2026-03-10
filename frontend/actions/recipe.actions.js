@@ -203,10 +203,18 @@ Guidelines:
 - Estimate realistic cooking times
 - Keep total instructions under 12 steps
 `;
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    let text;
+    try{
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      text = response.text();
+    }catch(error){
+      console.log("error generating recipe:", error);
+      throw new Error("AI services are currently unavailable. Please try again later.");
+    }
+    if(!text){
+      throw new Error("No response from AI. Please try again.");
+    }
 
     // Parse JSON response
     let recipeData;
@@ -562,10 +570,22 @@ Rules:
 - Make recipes realistic and delicious
 `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    // const result = await model.generateContent(prompt);
+    // const response = await result.response;
+    // const text = response.text();
 
+    let text;
+    try{
+      const result=await model.generateContent(prompt);
+      const response=await result.response;
+      text = response.text();
+    }catch(error){
+      console.log("Error generating recipe suggestions:", error);
+      throw new Error("AI services are currently unavailable. Please try again later.");
+    }
+    if(!text){
+      throw new Error("No response from AI. Please try again.");
+    }
     let recipeSuggestions;
     try {
       const cleanText = text
