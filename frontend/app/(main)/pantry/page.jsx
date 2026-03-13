@@ -113,9 +113,10 @@ const PantryPage = () => {
     setEditValues({ name: "", quantity: "" });
   };
 
-
-    const handleModalSuccess = () => {
-    }
+  // Refresh pantry after adding items
+  const handleModalSuccess = () => {
+    fetchItems();
+  }
   return (
     <div className='min-h-screen bg-stone-50 pt-24 pb-16 px-4'>
         <div className='container mx-auto max-w-5xl'>
